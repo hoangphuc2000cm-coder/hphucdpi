@@ -2,698 +2,722 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hphucdpi - Gaming Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hphucdpi - Free Fire Optimizer</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
   body {
     font-family: -apple-system, 'Segoe UI', sans-serif;
-    background: #0a0e1a;
-    color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
-    user-select: none;
+    background: #05030f; color: #fff; min-height: 100vh;
+    overflow-x: hidden; user-select: none; position: relative;
   }
-  
-  /* ===== NỀN SAO ===== */
-  .stars {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at top, #1a1f3a 0%, #0a0e1a 70%);
-    z-index: -2;
+  .bg {
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(102, 0, 255, 0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(0, 100, 255, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(255, 0, 200, 0.2) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0420 0%, #05030f 100%);
   }
-  .stars::before, .stars::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+  .bg::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background-image: 
-      radial-gradient(1px 1px at 20% 30%, #fff, transparent),
-      radial-gradient(1px 1px at 60% 70%, #9bb, transparent),
-      radial-gradient(1px 1px at 80% 20%, #fff, transparent),
-      radial-gradient(1px 1px at 40% 80%, #79f, transparent),
-      radial-gradient(2px 2px at 90% 50%, #aaf, transparent);
-    background-size: 200% 200%;
-    animation: twinkle 6s infinite alternate;
+      linear-gradient(115deg, transparent 45%, rgba(120, 60, 255, 0.15) 46%, transparent 47%),
+      linear-gradient(115deg, transparent 55%, rgba(120, 60, 255, 0.1) 56%, transparent 57%),
+      linear-gradient(-115deg, transparent 35%, rgba(0, 150, 255, 0.12) 36%, transparent 37%);
+    pointer-events: none;
   }
-  .stars::after { animation-delay: 3s; opacity: 0.5; }
-  @keyframes twinkle {
-    from { opacity: 0.3; transform: scale(1); }
-    to { opacity: 0.9; transform: scale(1.02); }
+  .stars { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  .stars::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, #fff, transparent),
+      radial-gradient(1px 1px at 30% 40%, #9cf, transparent),
+      radial-gradient(1.5px 1.5px at 70% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 85% 55%, #f9f, transparent),
+      radial-gradient(1px 1px at 50% 75%, #9cf, transparent),
+      radial-gradient(1px 1px at 20% 85%, #fff, transparent);
+    background-size: 100% 100%; animation: twinkle 4s infinite alternate;
   }
-
-  /* ===== HEADER ===== */
+  @keyframes twinkle { from { opacity: 0.4; } to { opacity: 1; } }
   .header {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(180deg, rgba(30,40,70,0.9), transparent);
+    padding: 12px 16px;
+    background: linear-gradient(180deg, rgba(20, 10, 50, 0.95), rgba(10, 5, 30, 0.8));
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(100,150,255,0.15);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    border-bottom: 2px solid rgba(120, 60, 255, 0.4);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(120, 60, 255, 0.3);
   }
-  
+  .brand { display: flex; align-items: center; justify-content: space-between; }
   .logo {
-    font-size: 22px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #4fc3f7, #b388ff, #ff4081);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
+    font-size: 20px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(135deg, #a855f7, #6366f1, #06b6d4);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
   }
-  
-  .logo::before { content: '⚡ '; -webkit-text-fill-color: #4fc3f7; }
-  
-  .status-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
+  .logo::before { content: '⚡'; -webkit-text-fill-color: #a855f7; margin-right: 4px; }
+  .logo-sub {
+    font-size: 9px; color: #a855f7; letter-spacing: 2px;
+    text-transform: uppercase; display: block; margin-top: -2px;
+    -webkit-text-fill-color: #a855f7;
+  }
+  .online-badge {
+    display: flex; align-items: center; gap: 6px; font-size: 10px;
     padding: 6px 12px;
-    background: rgba(0,255,150,0.1);
-    border: 1px solid rgba(0,255,150,0.3);
-    border-radius: 20px;
-    color: #00ff96;
-    font-weight: 600;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(168, 85, 247, 0.2));
+    border: 1px solid rgba(6, 182, 212, 0.6); border-radius: 20px;
+    color: #06b6d4; font-weight: 700;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
   }
-  
-  .status-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: #00ff96;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #00ff96;
+  .online-badge::before {
+    content: ''; width: 6px; height: 6px; background: #06b6d4;
+    border-radius: 50%; box-shadow: 0 0 8px #06b6d4;
     animation: pulse 1.5s infinite;
   }
-  
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+  .banner {
+    margin: 16px; padding: 24px 16px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(88, 28, 135, 0.6), rgba(30, 58, 138, 0.6));
+    border: 2px solid rgba(168, 85, 247, 0.5);
+    position: relative; overflow: hidden; text-align: center;
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3), inset 0 0 40px rgba(168, 85, 247, 0.15);
   }
-
-  /* ===== PANEL CHÍNH ===== */
-  .panel {
-    padding: 16px;
-    max-width: 500px;
-    margin: 0 auto;
-    padding-bottom: 100px;
+  .banner::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
   }
-  
+  @keyframes rotate { to { transform: rotate(360deg); } }
+  .banner h1 {
+    font-size: 34px; font-weight: 900; letter-spacing: 3px;
+    background: linear-gradient(135deg, #c084fc, #60a5fa, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative; z-index: 1; margin-bottom: 4px;
+  }
+  .banner p {
+    font-size: 11px; color: #c084fc; letter-spacing: 3px;
+    position: relative; z-index: 1; font-weight: 600; text-transform: uppercase;
+  }
+  .banner .tagline {
+    display: flex; justify-content: center; gap: 8px; margin-top: 12px;
+    position: relative; z-index: 1; flex-wrap: wrap;
+  }
+  .banner .tagline span {
+    font-size: 9px; color: #a5b4fc; font-weight: 600;
+    padding: 4px 10px; background: rgba(168, 85, 247, 0.2);
+    border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.4);
+  }
+  .panel { padding: 0 16px 100px; max-width: 500px; margin: 0 auto; }
   .section-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #6688bb;
-    margin: 20px 0 12px;
-    font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+    color: #a855f7; margin: 20px 0 12px; font-weight: 800;
+    display: flex; align-items: center; gap: 8px;
   }
-  
-  /* ===== CARD FPS ===== */
-  .fps-card {
-    background: linear-gradient(135deg, rgba(79,195,247,0.1), rgba(179,136,255,0.1));
-    border: 1px solid rgba(100,150,255,0.2);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 16px;
+  .section-title::before { content: '◆'; color: #22d3ee; font-size: 8px; }
+  .feature-card {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(120, 60, 255, 0.4); border-radius: 14px;
+    padding: 14px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+    position: relative; overflow: hidden; transition: all 0.3s;
   }
-  
-  .fps-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    animation: shine 3s infinite;
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, #a855f7, #06b6d4);
   }
-  
-  @keyframes shine {
-    to { left: 100%; }
-  }
-  
-  .fps-value {
-    font-size: 56px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #00ff96, #4fc3f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  
-  .fps-label {
-    font-size: 12px;
-    color: #8899bb;
-    letter-spacing: 3px;
-    margin-top: 6px;
-  }
-  
-  .fps-sub {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(100,150,255,0.15);
-  }
-  
-  .fps-sub-item {
-    font-size: 11px;
-    color: #8899bb;
-    text-align: center;
-  }
-  
-  .fps-sub-item strong {
-    display: block;
-    font-size: 16px;
-    color: #4fc3f7;
-    margin-bottom: 2px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ===== GRID TÍNH NĂNG ===== */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  
-  .feature {
-    background: rgba(30,40,70,0.6);
-    border: 1px solid rgba(100,150,255,0.15);
-    border-radius: 16px;
-    padding: 14px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .feature:active { transform: scale(0.95); }
-  
-  .feature.active {
-    background: linear-gradient(135deg, rgba(79,195,247,0.25), rgba(179,136,255,0.25));
-    border-color: #4fc3f7;
-    box-shadow: 0 0 20px rgba(79,195,247,0.3);
-  }
-  
-  .feature.active::after {
-    content: '';
-    position: absolute;
-    top: 6px; right: 6px;
-    width: 6px; height: 6px;
-    background: #00ff96;
-    border-radius: 50%;
-    box-shadow: 0 0 6px #00ff96;
-  }
-  
+  .feature-card.active { border-color: #22d3ee; box-shadow: 0 4px 25px rgba(34, 211, 238, 0.3); }
   .feature-icon {
-    font-size: 24px;
-    margin-bottom: 6px;
-    display: block;
+    width: 50px; height: 50px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.2));
+    border: 2px solid rgba(168, 85, 247, 0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
   }
-  
-  .feature-name {
-    font-size: 11px;
-    color: #ccd6f6;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  
-  .feature-desc {
-    font-size: 9px;
-    color: #6688bb;
-    margin-top: 2px;
-  }
-
-  /* ===== CROSSHAIR OVERLAY ===== */
-  .crosshair {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 9999;
-    display: none;
-  }
-  
-  .crosshair.active { display: block; }
-  
-  .crosshair-dot {
-    width: 20px; height: 20px;
-    border: 2px solid #00ff96;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #00ff96, inset 0 0 6px #00ff96;
-    position: relative;
-  }
-  
-  .crosshair-dot::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 2px; height: 2px;
-    background: #00ff96;
-    border-radius: 50%;
-    box-shadow: 0 0 6px #00ff96;
-  }
-
-  /* ===== THANH TRƯỢT ===== */
-  .slider-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    background: rgba(30,40,70,0.6);
-    border: 1px solid rgba(100,150,255,0.15);
-    border-radius: 14px;
-    margin-bottom: 8px;
-  }
-  
-  .slider-row label {
-    font-size: 12px;
-    color: #ccd6f6;
-    min-width: 70px;
-    font-weight: 600;
-  }
-  
-  .slider-row input[type="range"] {
-    flex: 1;
-    -webkit-appearance: none;
-    height: 4px;
-    background: rgba(100,150,255,0.2);
-    border-radius: 2px;
-    outline: none;
-  }
-  
-  .slider-row input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px; height: 18px;
-    background: linear-gradient(135deg, #4fc3f7, #b388ff);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(79,195,247,0.6);
-  }
-  
-  .slider-row .value {
-    font-size: 12px;
-    color: #4fc3f7;
-    font-weight: 700;
-    min-width: 40px;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ===== TOGGLE ===== */
-  .toggle-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px;
-    background: rgba(30,40,70,0.6);
-    border: 1px solid rgba(100,150,255,0.15);
-    border-radius: 14px;
-    margin-bottom: 8px;
-  }
-  
-  .toggle-row span {
-    font-size: 13px;
-    color: #ccd6f6;
-    font-weight: 600;
-  }
-  
-  .toggle-row .sub {
-    font-size: 10px;
-    color: #6688bb;
-    display: block;
-    margin-top: 2px;
-    font-weight: 400;
-  }
-  
+  .feature-info { flex: 1; min-width: 0; }
+  .feature-name { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+  .feature-desc { font-size: 10px; color: #a5b4fc; line-height: 1.3; }
   .switch {
-    width: 46px; height: 26px;
-    background: rgba(100,150,255,0.2);
-    border-radius: 13px;
-    position: relative;
-    cursor: pointer;
-    transition: background 0.3s;
-    flex-shrink: 0;
+    width: 52px; height: 28px; background: rgba(100, 100, 130, 0.4);
+    border-radius: 14px; position: relative; cursor: pointer;
+    transition: all 0.3s; flex-shrink: 0;
+    border: 1px solid rgba(120, 60, 255, 0.3);
   }
-  
   .switch::after {
-    content: '';
-    position: absolute;
-    top: 3px; left: 3px;
-    width: 20px; height: 20px;
-    background: #8899bb;
-    border-radius: 50%;
-    transition: all 0.3s;
+    content: 'OFF'; position: absolute; top: 50%; left: 6px;
+    transform: translateY(-50%); font-size: 8px; font-weight: 700;
+    color: #8899bb; transition: all 0.3s;
   }
-  
   .switch.on {
-    background: linear-gradient(135deg, #4fc3f7, #b388ff);
+    background: linear-gradient(135deg, #a855f7, #06b6d4);
+    border-color: #22d3ee; box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
   }
-  
-  .switch.on::after {
-    left: 23px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  .switch.on::after { content: 'ON'; left: auto; right: 6px; color: #fff; }
+  .switch::before {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 22px; height: 22px; background: #fff;
+    border-radius: 50%; transition: all 0.3s; z-index: 1;.fps-selector {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(120, 60, 255, 0.4); border-radius: 14px;
+    padding: 16px 14px; margin-bottom: 10px;
+    position: relative; overflow: hidden;
   }
-
-  /* ===== BOTTOM NAV ===== */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 8px 20px;
-    background: rgba(10,14,26,0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(100,150,255,0.15);
-    z-index: 100;
+  .fps-selector::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, #22d3ee, #a855f7);
   }
-  
-  .nav-item {
-    flex: 1;
-    text-align: center;
-    padding: 6px;
-    cursor: pointer;
-    color: #6688bb;
-    transition: color 0.2s;
+  .fps-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .fps-header-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(168, 85, 247, 0.2));
+    border: 2px solid rgba(34, 211, 238, 0.5);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
-  
-  .nav-item.active { color: #4fc3f7; }
-  
-  .nav-item .nav-icon {
-    font-size: 20px;
-    display: block;
-    margin-bottom: 2px;
+  .fps-header-text h3 { font-size: 14px; font-weight: 800; color: #fff; }
+  .fps-header-text p { font-size: 10px; color: #a5b4fc; }
+  .fps-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .fps-option {
+    background: rgba(20, 10, 45, 0.8);
+    border: 2px solid rgba(120, 60, 255, 0.3);
+    border-radius: 10px; padding: 12px 8px;
+    text-align: center; cursor: pointer; transition: all 0.3s;
+    position: relative;
   }
-  
-  .nav-item .nav-label {
-    font-size: 10px;
-    font-weight: 600;
+  .fps-option.selected {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(34, 211, 238, 0.3));
+    border-color: #22d3ee;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
   }
-  
-  /* ===== TOAST ===== */
+  .fps-option.selected::after {
+    content: '✓'; position: absolute; top: 4px; right: 6px;
+    font-size: 10px; color: #22d3ee; font-weight: 700;
+  }
+  .fps-value {
+    font-size: 22px; font-weight: 900;
+    background: linear-gradient(135deg, #c084fc, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .fps-label { font-size: 9px; color: #a5b4fc; margin-top: 4px; font-weight: 600; }
+  .fps-option.selected .fps-label { color: #22d3ee; }
+  .info-card {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(120, 60, 255, 0.4);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .info-title {
+    font-size: 12px; font-weight: 800; color: #a855f7;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  }
+  .info-title::before { content: '📱'; font-size: 14px; }
+  .device-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .device-btn {
+    background: rgba(20, 10, 45, 0.8);
+    border: 2px solid rgba(120, 60, 255, 0.3);
+    border-radius: 12px; padding: 14px 8px;
+    text-align: center; cursor: pointer; transition: all 0.3s;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .device-btn.selected {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(34, 211, 238, 0.3));
+    border-color: #22d3ee;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+  }
+  .device-btn-icon { font-size: 28px; }
+  .device-btn-name { font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+  .device-btn.selected .device-btn-name { color: #22d3ee; }
+  .device-btn-status { font-size: 9px; color: #a5b4fc; }
+  .fps-display {
+    margin-top: 12px; padding: 10px;
+    background: rgba(20, 10, 45, 0.6);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: 10px; text-align: center;
+  }
+  .fps-display-label { font-size: 10px; color: #a5b4fc; letter-spacing: 1px; }
+  .fps-display-value {
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(135deg, #22d3ee, #c084fc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .benefits {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(120, 60, 255, 0.4);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+  }
+  .benefits-title {
+    font-size: 12px; font-weight: 800; color: #a855f7;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .benefits-title::before { content: '👑'; font-size: 14px; }
+  .benefit-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0; font-size: 12px; color: #e0e7ff;
+  }
+  .benefit-item::before {
+    content: '✓'; color: #22d3ee; font-weight: 900;
+    width: 18px; height: 18px;
+    background: rgba(34, 211, 238, 0.15);
+    border: 1px solid rgba(34, 211, 238, 0.5);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 10px; flex-shrink: 0;
+  }
+  .contact-card {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(120, 60, 255, 0.4);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .contact-title {
+    font-size: 12px; font-weight: 800; color: #a855f7;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+  }
+  .contact-title::before { content: '📞'; font-size: 14px; }
+  .contact-info {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px; background: rgba(20, 10, 45, 0.7);
+    border: 2px solid rgba(34, 211, 238, 0.4);
+    border-radius: 12px; margin-bottom: 10px;
+  }
+  .contact-info-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7, #06b6d4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .contact-info-label {
+    font-size: 10px; color: #a5b4fc;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .contact-info-value {
+    font-size: 20px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(135deg, #22d3ee, #c084fc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .contact-action {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 12px 8px; border-radius: 10px;
+    font-size: 12px; font-weight: 800;
+    cursor: pointer; text-decoration: none;
+    border: 2px solid; letter-spacing: 0.5px;
+  }
+  .contact-action.call {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.15));
+    border-color: rgba(34, 211, 238, 0.6); color: #22d3ee;
+  }
+  .contact-action.zalo {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(120, 60, 255, 0.15));
+    border-color: rgba(168, 85, 247, 0.6); color: #c084fc;
+  }
+  .prime-header {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(168, 85, 247, 0.2));
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 16px; padding: 20px 16px;
+    margin-bottom: 14px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .prime-crown {
+    font-size: 48px; display: block; margin-bottom: 8px;
+    position: relative; z-index: 1;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .prime-title {
+    font-size: 24px; font-weight: 900; letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative; z-index: 1; margin-bottom: 4px;
+  }
+  .prime-subtitle {
+    font-size: 11px; color: #ffed4e; letter-spacing: 2px;
+    position: relative; z-index: 1; text-transform: uppercase;
+  }
+  .prime-status {
+    margin-top: 12px; display: inline-block;
+    padding: 6px 16px; background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 80, 80, 0.6);
+    border-radius: 20px; color: #ff5050;
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    position: relative; z-index: 1;
+  }
+  .prime-status.active {
+    background: rgba(0, 255, 150, 0.15);
+    border-color: rgba(0, 255, 150, 0.6);
+    color: #00ff96;
+  }
+  .prime-feature {
+    background: linear-gradient(135deg, rgba(40, 20, 5, 0.9), rgba(20, 10, 40, 0.95));
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .prime-feature::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, #ffd700, #ffed4e);
+  }
+  .prime-feature.locked { opacity: 0.75; }
+  .prime-feature.locked::after {
+    content: '🔒'; position: absolute; top: 8px; right: 8px; font-size: 14px;
+  }
+  .prime-feature.unlocked {
+    border-color: #00ff96;
+    box-shadow: 0 4px 20px rgba(0, 255, 150, 0.3);
+  }
+  .prime-feature.unlocked::before {
+    background: linear-gradient(180deg, #00ff96, #22d3ee);
+  }
+  .prime-feature.unlocked::after {
+    content: '✓'; color: #00ff96; font-size: 16px; font-weight: 900;
+  }
+  .prime-icon {
+    width: 50px; height: 50px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 237, 78, 0.15));
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .prime-name {
+    font-size: 14px; font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 3px;
+  }
+  .prime-feature.unlocked .prime-name {
+    background: linear-gradient(135deg, #00ff96, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .prime-desc { font-size: 10px; color: #fbbf24; line-height: 1.3; }
+  .prime-btn {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border: none; border-radius: 12px; padding: 14px;
+    width: 100%; color: #1a0a00;
+    font-size: 14px; font-weight: 900; letter-spacing: 2px;
+    cursor: pointer; margin-top: 10px;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  }
+  .prime-btn:active { transform: scale(0.98); }
   .toast {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: linear-gradient(135deg, #4fc3f7, #b388ff);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s;
-    z-index: 10000;
-    box-shadow: 0 8px 24px rgba(79,195,247,0.4);
-    white-space: nowrap;
+    position: fixed; bottom: 100px; left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    background: linear-gradient(135deg, #a855f7, #06b6d4);
+    color: #fff; padding: 12px 24px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+    opacity: 0; pointer-events: none; transition: all 0.3s;
+    z-index: 10000; white-space: nowrap; max-width: 90vw;
+    overflow: hidden; text-overflow: ellipsis;
   }
-  
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .crosshair {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 9999; display: none;
   }
-
-  /* ===== TAB CONTENT ===== */
+  .crosshair.active { display: block; }
+  .crosshair-dot {
+    width: 30px; height: 30px; border: 2px solid #22d3ee;
+    border-radius: 50%; box-shadow: 0 0 15px #22d3ee;
+    position: relative;
+  }
+  .crosshair-dot::before, .crosshair-dot::after {
+    content: ''; position: absolute; background: #22d3ee;
+    box-shadow: 0 0 6px #22d3ee;
+  }
+  .crosshair-dot::before {
+    top: 50%; left: -6px; width: 8px; height: 2px;
+    transform: translateY(-50%);
+  }
+  .crosshair-dot::after {
+    top: 50%; right: -6px; width: 8px; height: 2px;
+    transform: translateY(-50%);
+  }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeUp 0.3s; }
-  
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  
-  /* ===== GAME MODE ===== */
-  .game-overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
-    pointer-events: none;
-    z-index: 9998;
-    display: none;
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: space-around;
+    padding: 10px 8px 22px;
+    background: linear-gradient(180deg, rgba(10, 5, 30, 0.95), rgba(5, 3, 15, 1));
+    backdrop-filter: blur(20px);
+    border-top: 2px solid rgba(120, 60, 255, 0.4);
+    z-index: 100;
   }
-  
-  .game-overlay.active { display: block; }
-  
-  .game-indicator {
-    position: fixed;
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,255,150,0.15);
-    border: 1px solid rgba(0,255,150,0.4);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 12px;
-    color: #00ff96;
-    font-weight: 700;
-    z-index: 9999;
-    display: none;
-    backdrop-filter: blur(10px);
+  .nav-item {
+    flex: 1; text-align: center; padding: 4px;
+    cursor: pointer; color: #6366f1; transition: all 0.2s;
+    border-radius: 10px;
   }
-  
-  .game-indicator.active { display: block; animation: glow 1.5s infinite alternate; }
-  
-  @keyframes glow {
-    from { box-shadow: 0 0 10px rgba(0,255,150,0.3); }
-    to { box-shadow: 0 0 25px rgba(0,255,150,0.7); }
+  .nav-item.active { color: #22d3ee; }
+  .nav-item .nav-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+  .nav-item .nav-label { font-size: 9px; font-weight: 600; }
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px; background: rgba(20, 10, 45, 0.6);
+    border: 1px solid rgba(120, 60, 255, 0.3);
+    border-radius: 10px; margin-bottom: 6px;
   }
+  .toggle-row-label {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: #e0e7ff; font-weight: 600;
+  }
+  .toggle-switch-small {
+    width: 42px; height: 24px; background: rgba(100, 100, 130, 0.4);
+    border-radius: 12px; position: relative; cursor: pointer;
+    transition: all 0.3s; flex-shrink: 0;
+  }
+  .toggle-switch-small::before {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 18px; height: 18px; background: #fff;
+    border-radius: 50%; transition: all 0.3s;
+  }
+  .toggle-switch-small.on {
+    background: linear-gradient(135deg, #a855f7, #06b6d4);
+  }
+  .toggle-switch-small.on::before { left: 20px; }
 </style>
 </head>
 <body>
-
+  }
+  .switch.on::before { left: 26px; }<div class="bg"></div>
 <div class="stars"></div>
 
-<!-- Crosshair overlay -->
 <div class="crosshair" id="crosshair">
   <div class="crosshair-dot"></div>
 </div>
 
-<!-- Game mode overlay -->
-<div class="game-overlay" id="gameOverlay"></div>
-<div class="game-indicator" id="gameIndicator">🎮 GAME MODE - FPS: <span id="gameFps">0</span></div>
-
-<!-- Header -->
 <div class="header">
-  <div class="logo">Hphucdpi</div>
-  <div class="status-badge">ONLINE</div>
+  <div class="brand">
+    <div>
+      <div class="logo">Hphucdpi</div>
+      <div class="logo-sub">Free Fire Optimizer</div>
+    </div>
+    <div class="online-badge">ONLINE</div>
+  </div>
 </div>
 
-<!-- Panel chính -->
 <div class="panel">
-  
-  <!-- TAB: TRANG CHỦ -->
+
+  <!-- TRANG CHỦ -->
   <div class="tab-content active" id="tab-home">
-    <div class="section-title">Hiệu năng thiết bị</div>
-    
-    <div class="fps-card">
-      <div class="fps-value" id="fpsValue">60</div>
-      <div class="fps-label">FPS HIỆN TẠI</div>
-      <div class="fps-sub">
-        <div class="fps-sub-item">
-          <strong id="pingValue">24</strong>
-          PING (ms)
+    <div class="banner">
+      <h1>HPHUC DPI</h1>
+      <p>Tối ưu trải nghiệm Free Fire</p>
+      <div class="tagline">
+        <span>Mượt hơn</span>
+        <span>Ổn định hơn</span>
+        <span>Chiến tốt hơn</span>
+      </div>
+    </div>
+
+    <div class="section-title">Tính năng chính</div>
+
+    <div class="feature-card" onclick="toggleFeature(this, 'Trợ tâm')">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-info">
+        <div class="feature-name">TRỢ TÂM</div>
+        <div class="feature-desc">Hỗ trợ canh tâm, giúp bạn chính xác hơn</div>
+      </div>
+      <div class="switch"></div>
+    </div>
+
+    <div class="feature-card active" onclick="toggleFeature(this, 'Tăng FPS')">
+      <div class="feature-icon">📺</div>
+      <div class="feature-info">
+        <div class="feature-name">TĂNG FPS</div>
+        <div class="feature-desc">Giúp game mượt hơn, giảm giật lag</div>
+      </div>
+      <div class="switch on"></div>
+    </div>
+
+    <div class="feature-card active" onclick="toggleFeature(this, 'Tăng độ nhạy')">
+      <div class="feature-icon">📱</div>
+      <div class="feature-info">
+        <div class="feature-name">TĂNG ĐỘ NHẠY MÀN HÌNH</div>
+        <div class="feature-desc">Phản hồi nhanh hơn, thao tác mượt hơn</div>
+      </div>
+      <div class="switch on"></div>
+    </div>
+
+    <div class="feature-card" onclick="toggleFeature(this, 'Fix rung')">
+      <div class="feature-icon">📈</div>
+      <div class="feature-info">
+        <div class="feature-name">FIX RUNG</div>
+        <div class="feature-desc">Giảm rung khi kéo tâm, giúp thao tác ổn định</div>
+      </div>
+      <div class="switch on"></div>
+    </div>
+
+    <!-- FPS SELECTOR -->
+    <div class="section-title">Chọn FPS</div>
+    <div class="fps-selector">
+      <div class="fps-header">
+        <div class="fps-header-icon">⚡</div>
+        <div class="fps-header-text">
+          <h3>Cài đặt FPS</h3>
+          <p>Chọn mức FPS phù hợp thiết bị</p>
         </div>
-        <div class="fps-sub-item">
-          <strong id="cpuValue">35%</strong>
-          CPU
+      </div>
+      <div class="fps-options">
+        <div class="fps-option selected" onclick="selectFPS(this, 60)">
+          <div class="fps-value">60</div>
+          <div class="fps-label">TIÊU CHUẨN</div>
         </div>
-        <div class="fps-sub-item">
-          <strong id="ramValue">2.1GB</strong>
-          RAM
+        <div class="fps-option" onclick="selectFPS(this, 90)">
+          <div class="fps-value">90</div>
+          <div class="fps-label">CAO</div>
+        </div>
+        <div class="fps-option" onclick="selectFPS(this, 120)">
+          <div class="fps-value">120</div>
+          <div class="fps-label">SIÊU MƯỢT</div>
         </div>
       </div>
     </div>
-    
-    <div class="section-title">Tính năng nhanh</div>
-    <div class="grid">
-      <div class="feature" onclick="toggleFeature(this, 'Chế độ chơi game')">
-        <span class="feature-icon">🎮</span>
-        <div class="feature-name">Game Mode</div>
-        <div class="feature-desc">Tối ưu hóa</div>
+
+    <!-- THÔNG TIN THIẾT BỊ -->
+    <div class="section-title">Thông tin thiết bị</div>
+    <div class="info-card">
+      <div class="info-title">Thông tin thiết bị</div>
+      <div class="device-options">
+        <div class="device-btn selected" onclick="selectDevice(this, 'iOS')">
+          <div class="device-btn-icon">🍎</div>
+          <div class="device-btn-name">iOS</div>
+          <div class="device-btn-status">Đang chọn</div>
+        </div>
+        <div class="device-btn" onclick="selectDevice(this, 'ADR')">
+          <div class="device-btn-icon">🤖</div>
+          <div class="device-btn-name">ADR</div>
+          <div class="device-btn-status">Android</div>
+        </div>
       </div>
-      <div class="feature" onclick="toggleFeature(this, 'Trợ tâm ngắm')">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-name">Trợ tâm</div>
-        <div class="feature-desc">Crosshair</div>
+      <div class="fps-display">
+        <div class="fps-display-label">FPS HIỆN TẠI</div>
+        <div class="fps-display-value" id="currentFPS">60</div>
       </div>
-      <div class="feature" onclick="toggleFeature(this, 'Chặn thông báo')">
-        <span class="feature-icon">🔕</span>
-        <div class="feature-name">Chặn TB</div>
-        <div class="feature-desc">Không làm phiền</div>
-      </div>
-      <div class="feature" onclick="toggleFeature(this, 'Tăng tốc mạng')">
-        <span class="feature-icon">📶</span>
-        <div class="feature-name">Boost Net</div>
-        <div class="feature-desc">Giảm ping</div>
-      </div>
-      <div class="feature" onclick="toggleFeature(this, 'Ghi màn hình')">
-        <span class="feature-icon">🎥</span>
-        <div class="feature-name">Ghi hình</div>
-        <div class="feature-desc">Record</div>
-      </div>
-      <div class="feature" onclick="toggleFeature(this, 'Dọn RAM')">
-        <span class="feature-icon">🧹</span>
-        <div class="feature-name">Dọn RAM</div>
-        <div class="feature-desc">Giải phóng</div>
-      </div>
+    </div>
+
+    <!-- ƯU ĐIỂM -->
+    <div class="section-title">Ưu điểm nổi bật</div>
+    <div class="benefits">
+      <div class="benefits-title">Ưu điểm nổi bật</div>
+      <div class="benefit-item">Tối ưu cho iOS & ADR</div>
+      <div class="benefit-item">Ổn định khi chơi lâu</div>
+      <div class="benefit-item">Không can thiệp vào game</div>
+      <div class="benefit-item">An toàn - Dễ sử dụng</div>
     </div>
   </div>
-  
-  <!-- TAB: TÙY CHỈNH -->
+
+  <!-- CÀI ĐẶT -->
   <div class="tab-content" id="tab-settings">
     <div class="section-title">Cài đặt hiển thị</div>
-    
-    <div class="slider-row">
-      <label>Độ sáng</label>
-      <input type="range" min="0" max="100" value="70" oninput="updateSlider(this, 'brightnessValue', '%')">
-      <div class="value" id="brightnessValue">70%</div>
+    <div class="toggle-row" onclick="toggleSmall(this)">
+      <div class="toggle-row-label">🎨 Hiển thị FPS</div>
+      <div class="toggle-switch-small on"></div>
     </div>
-    
-    <div class="slider-row">
-      <label>Độ tương phản</label>
-      <input type="range" min="0" max="100" value="50" oninput="updateSlider(this, 'contrastValue', '%')">
-      <div class="value" id="contrastValue">50%</div>
+    <div class="toggle-row" onclick="toggleSmall(this)">
+      <div class="toggle-row-label">🔊 Âm thanh</div>
+      <div class="toggle-switch-small on"></div>
     </div>
-    
-    <div class="slider-row">
-      <label>Độ bão hòa</label>
-      <input type="range" min="0" max="100" value="60" oninput="updateSlider(this, 'saturationValue', '%')">
-      <div class="value" id="saturationValue">60%</div>
+    <div class="toggle-row" onclick="toggleSmall(this)">
+      <div class="toggle-row-label">🌙 Chế độ tối</div>
+      <div class="toggle-switch-small on"></div>
     </div>
-    
-    <div class="section-title">Bật / Tắt</div>
-    
-    <div class="toggle-row">
-      <div>
-        <span>Hiển thị FPS</span>
-        <span class="sub">Hiển thị chỉ số FPS trên màn hình</span>
-      </div>
-      <div class="switch on" onclick="toggleSwitch(this)"></div>
-    </div>
-    
-    <div class="toggle-row">
-      <div>
-        <span>Tự động tối ưu</span>
-        <span class="sub">Tự động khi mở game</span>
-      </div>
-      <div class="switch on" onclick="toggleSwitch(this)"></div>
-    </div>
-    
-    <div class="toggle-row">
-      <div>
-        <span>Tiết kiệm pin</span>
-        <span class="sub">Giảm hiệu năng khi pin yếu</span>
-      </div>
-      <div class="switch" onclick="toggleSwitch(this)"></div>
-    </div>
-    
-    <div class="toggle-row">
-      <div>
-        <span>Chế độ chuyên nghiệp</span>
-        <span class="sub">Mở khóa tùy chỉnh nâng cao</span>
-      </div>
-      <div class="switch" onclick="toggleSwitch(this)"></div>
+    <div class="toggle-row" onclick="toggleSmall(this)">
+      <div class="toggle-row-label">🔔 Thông báo</div>
+      <div class="toggle-switch-small"></div>
     </div>
   </div>
-  
-  <!-- TAB: CÔNG CỤ -->
-  <div class="tab-content" id="tab-tools">
-    <div class="section-title">Công cụ hệ thống</div>
-    
-    <div class="grid">
-      <div class="feature" onclick="showToast('📸 Đã chụp màn hình!')">
-        <span class="feature-icon">📸</span>
-        <div class="feature-name">Chụp hình</div>
+
+  <!-- PRIME VIP -->
+  <div class="tab-content" id="tab-prime">
+    <div class="prime-header">
+      <div class="prime-crown">👑</div>
+      <div class="prime-title">PRIME VIP</div>
+      <div class="prime-subtitle">Mở khóa tính năng cao cấp</div>
+      <div class="prime-status" id="primeStatus">CHƯA KÍCH HOẠT</div>
+    </div>
+
+    <div class="section-title">Tính năng VIP</div>
+
+    <div class="prime-feature locked" id="pf-aimcheck">
+      <div class="prime-icon">🎯</div>
+      <div class="feature-info">
+        <div class="prime-name">AIM CHECK</div>
+        <div class="prime-desc">Kiểm tra tâm ngắm tự động, tăng độ chính xác</div>
       </div>
-      <div class="feature" onclick="showToast('🧹 Đã dọn 512MB RAM!')">
-        <span class="feature-icon">🧹</span>
-        <div class="feature-name">Dọn RAM</div>
+      <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
+    </div>
+
+    <div class="prime-feature locked" id="pf-aimbody">
+      <div class="prime-icon">💀</div>
+      <div class="feature-info">
+        <div class="prime-name">AIM BODY</div>
+        <div class="prime-desc">Hỗ trợ khóa tâm vào thân đối thủ</div>
       </div>
-      <div class="feature" onclick="showToast('🌐 Đã kiểm tra mạng: 24ms')">
-        <span class="feature-icon">🌐</span>
-        <div class="feature-name">Test mạng</div>
+      <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
+    </div>
+
+    <div class="prime-feature locked" id="pf-aimdrag">
+      <div class="prime-icon">🔄</div>
+      <div class="feature-info">
+        <div class="prime-name">AIM DRAG 2.0</div>
+        <div class="prime-desc">Kéo tâm mượt mà hơn, kiểm soát tốt hơn</div>
       </div>
-      <div class="feature" onclick="showToast('🔋 Pin: 87% - Sạc nhanh')">
-        <span class="feature-icon">🔋</span>
-        <div class="feature-name">Pin</div>
+      <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
+    </div>
+
+    <div class="prime-feature locked" id="pf-antiband">
+      <div class="prime-icon">🛡️</div>
+      <div class="feature-info">
+        <div class="prime-name">ANTI BAND AIM</div>
+        <div class="prime-desc">Chống khóa tâm, bảo vệ tài khoản</div>
       </div>
-      <div class="feature" onclick="showToast('📊 Đang phân tích...')">
-        <span class="feature-icon">📊</span>
-        <div class="feature-name">Thống kê</div>
+      <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
+    </div>
+
+    <button class="prime-btn" onclick="buyPrime()">💎 MUA PRIME VIP NGAY</button>
+  </div>
+
+  <!-- LIÊN HỆ (GỘP HỖ TRỢ) -->
+  <div class="tab-content" id="tab-contact">
+    <div class="section-title">Liên hệ & Hỗ trợ</div>
+    <div class="contact-card">
+      <div class="contact-title">Liên hệ Admin</div>
+      <div class="contact-info">
+        <div class="contact-info-icon">📞</div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">Số điện thoại / Zalo</div>
+          <div class="contact-info-value">0916678949</div>
+        </div>
       </div>
-      <div class="feature" onclick="showToast('⚙️ Cài đặt nâng cao')">
-        <span class="feature-icon">⚙️</span>
-        <div class="feature-name">Nâng cao</div>
+      <div class="contact-actions">
+        <a href="tel:0916678949" class="contact-action call">📞 GỌI</a>
+        <a href="https://zalo.me/0916678949" target="_blank" class="contact-action zalo">💬 ZALO</a>
       </div>
     </div>
-    
-    <div class="section-title">Bộ nhớ</div>
-    <div class="fps-card">
-      <div class="fps-value" style="font-size:42px;"><span id="storageUsed">45</span>%</div>
-      <div class="fps-label">DUNG LƯỢNG ĐÃ DÙNG</div>
-      <div class="fps-sub">
-        <div class="fps-sub-item">
-          <strong>54GB</strong>
-          Đã dùng
-        </div>
-        <div class="fps-sub-item">
-          <strong>66GB</strong>
-          Còn trống
-        </div>
-        <div class="fps-sub-item">
-          <strong>120GB</strong>
-          Tổng
-        </div>
-      </div>
+
+    <div class="contact-card">
+      <div class="contact-title">Hỗ trợ</div>
+      <div class="benefit-item">Hướng dẫn sử dụng app</div>
+      <div class="benefit-item">Báo lỗi & góp ý</div>
+      <div class="benefit-item">Yêu cầu kích hoạt VIP</div>
+      <div class="benefit-item">Hỗ trợ 24/7 qua Zalo</div>
     </div>
   </div>
-  
-  <!-- TAB: TÀI KHOẢN -->
-  <div class="tab-content" id="tab-account">
-    <div class="fps-card" style="padding:30px;">
-      <div style="font-size:64px;margin-bottom:12px;">👤</div>
-      <div style="font-size:18px;font-weight:700;color:#fff;">Người dùng Hphucdpi</div>
-      <div style="font-size:12px;color:#6688bb;margin-top:4px;">Premium · Đã xác minh ✅</div>
-    </div>
-    
-    <div class="section-title">Tài khoản</div>
-    <div class="toggle-row" onclick="showToast('👤 Chỉnh sửa hồ sơ')">
-      <span>Chỉnh sửa hồ sơ</span>
-      <span style="color:#6688bb;">›</span>
-    </div>
-    <div class="toggle-row" onclick="showToast('💎 Nâng cấp Premium')">
-      <span>Nâng cấp Premium</span>
-      <span style="color:#6688bb;">›</span>
-    </div>
-    <div class="toggle-row" onclick="showToast('🎁 Mã quà tặng')">
-      <span>Mã quà tặng</span>
-      <span style="color:#6688bb;">›</span>
-    </div>
-    <div class="section-title">Khác</div>
-    <div class="toggle-row" onclick="showToast('❓ Trợ giúp')">
-      <span>Trợ giúp</span>
-      <span style="color:#6688bb;">›</span>
-    </div>
-    <div class="toggle-row" onclick="showToast('ℹ️ Phiên bản 1.0.0')">
-      <span>Về Hphucdpi</span>
-      <span style="color:#6688bb;">v1.0.0</span>
-    </div>
-  </div>
-  
+
 </div>
 
-<!-- Bottom Nav -->
+<div class="toast" id="toast"></div>
+
 <div class="bottom-nav">
   <div class="nav-item active" onclick="switchTab('home', this)">
     <span class="nav-icon">🏠</span>
@@ -701,22 +725,17 @@
   </div>
   <div class="nav-item" onclick="switchTab('settings', this)">
     <span class="nav-icon">⚙️</span>
-    <span class="nav-label">Tùy chỉnh</span>
+    <span class="nav-label">Cài đặt</span>
   </div>
-  <div class="nav-item" onclick="switchTab('tools', this)">
-    <span class="nav-icon">🛠️</span>
-    <span class="nav-label">Công cụ</span>
+  <div class="nav-item" onclick="switchTab('prime', this)">
+    <span class="nav-icon">👑</span>
+    <span class="nav-label">Prime VIP</span>
   </div>
-  <div class="nav-item" onclick="switchTab('account', this)">
-    <span class="nav-icon">👤</span>
-    <span class="nav-label">Tài khoản</span>
+  <div class="nav-item" onclick="switchTab('contact', this)">
+    <span class="nav-icon">📞</span>
+    <span class="nav-label">Liên hệ</span>
   </div>
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<script>
+</div><script>
   // ===== CHUYỂN TAB =====
   function switchTab(tab, el) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -739,60 +758,99 @@
   
   // ===== TOGGLE FEATURE =====
   function toggleFeature(el, name) {
+    const sw = el.querySelector('.switch');
+    sw.classList.toggle('on');
     el.classList.toggle('active');
-    const on = el.classList.contains('active');
+    const on = sw.classList.contains('on');
     showToast((on ? '✅ Bật: ' : '⭕ Tắt: ') + name);
-    
-    // Crosshair
-    if (name === 'Trợ tâm ngắm') {
+    if (name === 'Trợ tâm') {
       document.getElementById('crosshair').classList.toggle('active', on);
-    }
-    
-    // Game mode
-    if (name === 'Chế độ chơi game') {
-      document.getElementById('gameOverlay').classList.toggle('active', on);
-      document.getElementById('gameIndicator').classList.toggle('active', on);
     }
   }
   
-  // ===== TOGGLE SWITCH =====
-  function toggleSwitch(el) {
-    el.classList.toggle('on');
+  // ===== TOGGLE NHỎ =====
+  function toggleSmall(el) {
+    const sw = el.querySelector('.toggle-switch-small');
+    sw.classList.toggle('on');
     if (navigator.vibrate) navigator.vibrate(10);
   }
   
-  // ===== SLIDER =====
-  function updateSlider(el, id, suffix) {
-    document.getElementById(id).textContent = el.value + suffix;
+  // ===== CHỌN FPS =====
+  function selectFPS(el, fps) {
+    document.querySelectorAll('.fps-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('currentFPS').textContent = fps;
+    showToast('⚡ Đã chọn FPS: ' + fps);
+    if (navigator.vibrate) navigator.vibrate(15);
   }
   
-  // ===== SIMULATE FPS/PING/CPU =====
-  let gameMode = false;
+  // ===== CHỌN THIẾT BỊ =====
+  function selectDevice(el, device) {
+    document.querySelectorAll('.device-btn').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+    const status = el.querySelector('.device-btn-status');
+    document.querySelectorAll('.device-btn-status').forEach(s => {
+      if (s.textContent === 'Đang chọn') s.textContent = s.closest('.device-btn').querySelector('.device-btn-name').textContent === 'iOS' ? 'iOS' : 'Android';
+    });
+    status.textContent = 'Đang chọn';
+    showToast('📱 Đã chọn: ' + device);
+    if (navigator.vibrate) navigator.vibrate(15);
+  }
+  
+  // ===== PRIME VIP =====
+  let isPrime = false;
+  
+  function checkPrime(el) {
+    if (!isPrime) {
+      showToast('🔒 Cần mua PRIME VIP để sử dụng!');
+      if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+      return;
+    }
+    el.classList.toggle('on');
+    const feature = el.closest('.prime-feature');
+    const name = feature.querySelector('.prime-name').textContent;
+    const on = el.classList.contains('on');
+    feature.classList.toggle('unlocked', on);
+    showToast((on ? '✅ Bật: ' : '⭕ Tắt: ') + name);
+  }
+  
+  function buyPrime() {
+    if (isPrime) {
+      showToast('👑 Bạn đã là PRIME VIP!');
+      return;
+    }
+    if (confirm('💎 MUA PRIME VIP\n\nLiên hệ Zalo: 0916678949\n\nGiá: 100.000đ / tháng\n\nNhấn OK để mở Zalo')) {
+      window.open('https://zalo.me/0916678949', '_blank');
+    }
+  }
+  
+  function activatePrime() {
+    isPrime = true;
+    document.getElementById('primeStatus').textContent = 'ĐÃ KÍCH HOẠT ✓';
+    document.getElementById('primeStatus').classList.add('active');
+    document.querySelectorAll('.prime-feature').forEach(f => {
+      f.classList.remove('locked');
+    });
+    showToast('👑 PRIME VIP đã được kích hoạt!');
+  }
+  
+  // ===== SIMULATE FPS =====
   setInterval(() => {
-    const fps = 55 + Math.floor(Math.random() * 10);
-    const ping = 18 + Math.floor(Math.random() * 15);
-    const cpu = 25 + Math.floor(Math.random() * 20);
-    const ram = (1.8 + Math.random() * 1.5).toFixed(1);
-    
-    document.getElementById('fpsValue').textContent = fps;
-    document.getElementById('pingValue').textContent = ping;
-    document.getElementById('cpuValue').textContent = cpu + '%';
-    document.getElementById('ramValue').textContent = ram + 'GB';
-    document.getElementById('gameFps').textContent = fps;
-  }, 1500);
+    const currentFPS = parseInt(document.getElementById('currentFPS').textContent) || 60;
+    const variation = Math.floor(Math.random() * 5) - 2;
+    const display = document.querySelector('.fps-display-value');
+    if (display) {
+      display.textContent = Math.max(30, currentFPS + variation);
+    }
+  }, 2000);
   
   // ===== KHỞI TẠO =====
   window.addEventListener('load', () => {
     setTimeout(() => showToast('⚡ Hphucdpi đã sẵn sàng!'), 500);
   });
   
-  // Chống zoom double tap
-  let lastTouch = 0;
-  document.addEventListener('touchend', (e) => {
-    const now = Date.now();
-    if (now - lastTouch <= 300) e.preventDefault();
-    lastTouch = now;
-  }, { passive: false });
+  // Mở khóa VIP tạm để test (xóa dòng này nếu muốn khóa)
+  // activatePrime();
 </script>
 </body>
 </html>
