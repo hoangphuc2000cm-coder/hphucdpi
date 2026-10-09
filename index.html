@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -225,9 +225,6 @@
     -webkit-text-fill-color: transparent;
     line-height: 1;
   }
-  .fps-opt-inline.selected .fps-opt-num {
-    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.8));
-  }
   .fps-opt-txt {
     font-size: 8px;
     color: #a5b4fc;
@@ -372,15 +369,6 @@
     font-size: 11px; color: #ffed4e; letter-spacing: 2px;
     position: relative; z-index: 1; text-transform: uppercase;
   }
-  .prime-price {
-    margin-top: 8px;
-    font-size: 22px;
-    font-weight: 900;
-    color: #ffd700;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-  }
   .prime-status {
     margin-top: 12px; display: inline-block;
     padding: 6px 16px; background: rgba(255, 0, 0, 0.2);
@@ -393,6 +381,37 @@
     background: rgba(0, 255, 150, 0.15);
     border-color: rgba(0, 255, 150, 0.6);
     color: #00ff96;
+  }
+  .price-section {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 14px; padding: 14px; margin-bottom: 10px;
+  }
+  .price-title {
+    font-size: 12px; font-weight: 800; color: #ffd700;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 10px; text-align: center;
+  }
+  .price-option {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px;
+    background: rgba(20, 10, 45, 0.7);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px; margin-bottom: 8px;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .price-option:active { transform: scale(0.98); }
+  .price-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .price-icon { font-size: 24px; }
+  .price-name { font-size: 13px; font-weight: 800; color: #fff; }
+  .price-duration { font-size: 10px; color: #a5b4fc; }
+  .price-value {
+    font-size: 16px; font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   }
   .prime-feature {
     background: linear-gradient(135deg, rgba(40, 20, 5, 0.9), rgba(20, 10, 40, 0.95));
@@ -438,15 +457,63 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .prime-desc { font-size: 10px; color: #fbbf24; line-height: 1.3; }
-  .prime-btn {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    border: none; border-radius: 12px; padding: 14px;
-    width: 100%; color: #1a0a00;
-    font-size: 14px; font-weight: 900; letter-spacing: 2px;
-    cursor: pointer; margin-top: 10px;
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  .key-section {
+    background: linear-gradient(135deg, rgba(30, 15, 60, 0.9), rgba(15, 10, 40, 0.95));
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 14px;
   }
-  .prime-btn:active { transform: scale(0.98); }
+  .key-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #ffd700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .key-input {
+    width: 100%;
+    padding: 14px;
+    background: rgba(20, 10, 45, 0.8);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    color: #ffd700;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 2px;
+    font-family: monospace;
+    outline: none;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+  }
+  .key-input::placeholder {
+    color: rgba(255, 215, 0, 0.3);
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  .key-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #a855f7, #06b6d4);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5);
+  }
+  .key-btn:active { transform: scale(0.98); }
+  .key-note {
+    text-align: center;
+    font-size: 10px;
+    color: #fbbf24;
+    margin-top: 10px;
+    font-weight: 600;
+  }
   .toast {
     position: fixed; bottom: 100px; left: 50%;
     transform: translateX(-50%) translateY(30px);
@@ -557,7 +624,7 @@
         </div>
         <div class="switch on"></div>
       </div>
-      <div class="fps-inner" id="fpsInner">
+      <div class="fps-inner show" id="fpsInner">
         <div class="fps-inner-label">⚡ CHỌN MỨC FPS</div>
         <div class="fps-options-inline">
           <div class="fps-opt-inline selected" onclick="event.stopPropagation(); selectFPSInline(this, 60)">
@@ -585,7 +652,7 @@
       <div class="switch on"></div>
     </div>
 
-    <div class="feature-card" onclick="toggleFeature(this, 'Fix rung')">
+    <div class="feature-card active" onclick="toggleFeature(this, 'Fix rung')">
       <div class="feature-icon">📈</div>
       <div class="feature-info">
         <div class="feature-name">FIX RUNG</div>
@@ -631,8 +698,31 @@
       <div class="prime-crown">👑</div>
       <div class="prime-title">PRIME VIP</div>
       <div class="prime-subtitle">Mở khóa tính năng cao cấp</div>
-      <div class="prime-price">💰 50.000đ / tháng</div>
       <div class="prime-status" id="primeStatus">CHƯA KÍCH HOẠT</div>
+    </div>
+
+    <div class="price-section">
+      <div class="price-title">💎 BẢNG GIÁ</div>
+      <div class="price-option" onclick="buyPrime('week')">
+        <div class="price-left">
+          <div class="price-icon">📅</div>
+          <div>
+            <div class="price-name">GÓI TUẦN</div>
+            <div class="price-duration">7 ngày</div>
+          </div>
+        </div>
+        <div class="price-value">20.000đ</div>
+      </div>
+      <div class="price-option" onclick="buyPrime('month')">
+        <div class="price-left">
+          <div class="price-icon">📅</div>
+          <div>
+            <div class="price-name">GÓI THÁNG</div>
+            <div class="price-duration">30 ngày</div>
+          </div>
+        </div>
+        <div class="price-value">50.000đ</div>
+      </div>
     </div>
 
     <div class="section-title">Tính năng VIP</div>
@@ -673,7 +763,21 @@
       <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
     </div>
 
-    <button class="prime-btn" onclick="buyPrime()">💎 MUA PRIME VIP - 50K</button>
+    <div class="prime-feature locked" id="pf-dpihphuc">
+      <div class="prime-icon">⚡</div>
+      <div class="feature-info">
+        <div class="prime-name">DPI HPHUC</div>
+        <div class="prime-desc">Tối ưu DPI màn hình, tăng độ chính xác</div>
+      </div>
+      <div class="switch" onclick="event.stopPropagation(); checkPrime(this)"></div>
+    </div>
+
+    <div class="key-section">
+      <div class="key-label">🔑 NHẬP KEY KÍCH HOẠT</div>
+      <input type="text" class="key-input" id="keyInput" placeholder="HPHUC-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" autocapitalize="characters">
+      <button class="key-btn" onclick="activateKey()">⚡ KÍCH HOẠT NGAY</button>
+      <div class="key-note">⚠️ Mỗi KEY chỉ dùng được 1 máy</div>
+    </div>
   </div>
 
   <!-- LIÊN HỆ -->
@@ -737,7 +841,7 @@
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
     if (navigator.vibrate) navigator.vibrate(15);
   }
   
@@ -754,13 +858,12 @@
     }
   }
   
-  // ===== MỞ RỘNG FPS TRONG THẺ TĂNG FPS =====
+  // ===== FPS EXPAND =====
   let fpsExpanded = true;
   function toggleFPSExpand(header) {
     const card = header.closest('.fps-expand');
     const sw = card.querySelector('.switch');
     const inner = card.querySelector('.fps-inner');
-    
     if (!sw.classList.contains('on')) {
       sw.classList.add('on');
       card.classList.add('active');
@@ -769,30 +872,20 @@
       fpsExpanded = true;
       return;
     }
-    
     fpsExpanded = !fpsExpanded;
-    if (fpsExpanded) {
-      inner.classList.add('show');
-    } else {
-      inner.classList.remove('show');
-    }
-    
+    inner.classList.toggle('show', fpsExpanded);
     if (navigator.vibrate) navigator.vibrate(10);
   }
   
-  // ===== CHỌN FPS TRONG THẺ =====
   function selectFPSInline(el, fps) {
     el.parentElement.querySelectorAll('.fps-opt-inline').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
-    
-    const currentFPS = document.getElementById('currentFPS');
-    if (currentFPS) currentFPS.textContent = fps;
-    
+    const c = document.getElementById('currentFPS');
+    if (c) c.textContent = fps;
     showToast('⚡ Đã chọn FPS: ' + fps);
     if (navigator.vibrate) navigator.vibrate(15);
   }
   
-  // ===== CHỌN THIẾT BỊ =====
   function selectDevice(el, device) {
     document.querySelectorAll('.device-btn').forEach(d => d.classList.remove('selected'));
     el.classList.add('selected');
@@ -800,15 +893,176 @@
       const name = s.closest('.device-btn').querySelector('.device-btn-name').textContent;
       s.textContent = (name === 'iOS') ? 'iOS' : 'Android';
     });
-    const status = el.querySelector('.device-btn-status');
-    status.textContent = 'Đang chọn';
+    el.querySelector('.device-btn-status').textContent = 'Đang chọn';
     showToast('📱 Đã chọn: ' + device);
     if (navigator.vibrate) navigator.vibrate(15);
   }
   
-  // ===== PRIME VIP =====
+  // ===== DANH SÁCH KEY TUẦN (100 KEY) =====
+  const KEYS_WEEK = [
+    "HPHUC-W-A1B2-C3D4-E5F6","HPHUC-W-G7H8-I9J1-K2L3","HPHUC-W-M4N5-O6P7-Q8R9","HPHUC-W-S1T2-U3V4-W5X6","HPHUC-W-Y7Z8-A9B1-C2D3",
+    "HPHUC-W-E4F5-G6H7-I8J9","HPHUC-W-K1L2-M3N4-O5P6","HPHUC-W-Q7R8-S9T1-U2V3","HPHUC-W-W4X5-Y6Z7-A8B9","HPHUC-W-C1D2-E3F4-G5H6",
+    "HPHUC-W-I7J8-K9L1-M2N3","HPHUC-W-O4P5-Q6R7-S8T9","HPHUC-W-U1V2-W3X4-Y5Z6","HPHUC-W-A7B8-C9D1-E2F3","HPHUC-W-G4H5-I6J7-K8L9",
+    "HPHUC-W-M1N2-O3P4-Q5R6","HPHUC-W-S7T8-U9V1-W2X3","HPHUC-W-Y4Z5-A6B7-C8D9","HPHUC-W-E1F2-G3H4-I5J6","HPHUC-W-K7L8-M9N1-O2P3",
+    "HPHUC-W-Q4R5-S6T7-U8V9","HPHUC-W-W1X2-Y3Z4-A5B6","HPHUC-W-C7D8-E9F1-G2H3","HPHUC-W-I4J5-K6L7-M8N9","HPHUC-W-O1P2-Q3R4-S5T6",
+    "HPHUC-W-U7V8-W9X1-Y2Z3","HPHUC-W-A4B5-C6D7-E8F9","HPHUC-W-G1H2-I3J4-K5L6","HPHUC-W-M7N8-O9P1-Q2R3","HPHUC-W-S4T5-U6V7-W8X9",
+    "HPHUC-W-Y1Z2-A3B4-C5D6","HPHUC-W-E7F8-G9H1-I2J3","HPHUC-W-K4L5-M6N7-O8P9","HPHUC-W-Q1R2-S3T4-U5V6","HPHUC-W-W7X8-Y9Z1-A2B3",
+    "HPHUC-W-C4D5-E6F7-G8H9","HPHUC-W-I1J2-K3L4-M5N6","HPHUC-W-O7P8-Q9R1-S2T3","HPHUC-W-U4V5-W6X7-Y8Z9","HPHUC-W-A1C2-E3G4-I5K6",
+    "HPHUC-W-M7O8-Q9S1-U2W3","HPHUC-W-Y4A5-C6E7-G8I9","HPHUC-W-K1M2-O3Q4-S5U6","HPHUC-W-W7Y8-A9C1-E2G3","HPHUC-W-I4K5-M6O7-Q8S9",
+    "HPHUC-W-U1W2-Y3A4-C5E6","HPHUC-W-G7I8-K9M1-O2Q3","HPHUC-W-S4U5-W6Y7-A8C9","HPHUC-W-E1G2-I3K4-M5O6","HPHUC-W-Q7S8-U9W1-Y2A3",
+    "HPHUC-W-C4E5-G6I7-K8M9","HPHUC-W-O1Q2-S3U4-W5Y6","HPHUC-W-A7C8-E9G1-I2K3","HPHUC-W-M4O5-Q6S7-U8W9","HPHUC-W-Y1A2-C3E4-G5I6",
+    "HPHUC-W-K7M8-O9Q1-S2U3","HPHUC-W-W4Y5-A6C7-E8G9","HPHUC-W-I1K2-M3O4-Q5S6","HPHUC-W-U7W8-Y9A1-C2E3","HPHUC-W-G4I5-K6M7-O8Q9",
+    "HPHUC-W-S1U2-W3Y4-A5C6","HPHUC-W-E7G8-I9K1-M2O3","HPHUC-W-Q4S5-U6W7-Y8A9","HPHUC-W-C1E2-G3I4-K5M6","HPHUC-W-O7Q8-S9U1-W2Y3",
+    "HPHUC-W-A4C5-E6G7-I8K9","HPHUC-W-M1O2-Q3S4-U5W6","HPHUC-W-Y7A8-C9E1-G2I3","HPHUC-W-K4M5-O6Q7-S8U9","HPHUC-W-W1Y2-A3C4-E5G6",
+    "HPHUC-W-I7K8-M9O1-Q2S3","HPHUC-W-U4W5-Y6A7-C8E9","HPHUC-W-G1I2-K3M4-O5Q6","HPHUC-W-S7U8-W9Y1-A2C3","HPHUC-W-E4G5-I6K7-M8O9",
+    "HPHUC-W-Q1S2-U3W4-Y5A6","HPHUC-W-C7E8-G9I1-K2M3","HPHUC-W-O4Q5-S6U7-W8Y9","HPHUC-W-A1C2-E3G4-I5K6","HPHUC-W-M7O8-Q9S1-U2W3",
+    "HPHUC-W-Y4A5-C6E7-G8I9","HPHUC-W-K1M2-O3Q4-S5U6","HPHUC-W-W7Y8-A9C1-E2G3","HPHUC-W-I4K5-M6O7-Q8S9","HPHUC-W-U1W2-Y3A4-C5E6",
+    "HPHUC-W-G7I8-K9M1-O2Q3","HPHUC-W-S4U5-W6Y7-A8C9","HPHUC-W-E1G2-I3K4-M5O6","HPHUC-W-Q7S8-U9W1-Y2A3","HPHUC-W-C4E5-G6I7-K8M9",
+    "HPHUC-W-O1Q2-S3U4-W5Y6","HPHUC-W-A7C8-E9G1-I2K3","HPHUC-W-M4O5-Q6S7-U8W9","HPHUC-W-Y1A2-C3E4-G5I6","HPHUC-W-K7M8-O9Q1-S2U3"
+  ];
+  
+  // ===== DANH SÁCH KEY THÁNG (100 KEY) =====
+  const KEYS_MONTH = [
+    "HPHUC-M-A1B2-C3D4-E5F6","HPHUC-M-G7H8-I9J1-K2L3","HPHUC-M-M4N5-O6P7-Q8R9","HPHUC-M-S1T2-U3V4-W5X6","HPHUC-M-Y7Z8-A9B1-C2D3",
+    "HPHUC-M-E4F5-G6H7-I8J9","HPHUC-M-K1L2-M3N4-O5P6","HPHUC-M-Q7R8-S9T1-U2V3","HPHUC-M-W4X5-Y6Z7-A8B9","HPHUC-M-C1D2-E3F4-G5H6",
+    "HPHUC-M-I7J8-K9L1-M2N3","HPHUC-M-O4P5-Q6R7-S8T9","HPHUC-M-U1V2-W3X4-Y5Z6","HPHUC-M-A7B8-C9D1-E2F3","HPHUC-M-G4H5-I6J7-K8L9",
+    "HPHUC-M-M1N2-O3P4-Q5R6","HPHUC-M-S7T8-U9V1-W2X3","HPHUC-M-Y4Z5-A6B7-C8D9","HPHUC-M-E1F2-G3H4-I5J6","HPHUC-M-K7L8-M9N1-O2P3",
+    "HPHUC-M-Q4R5-S6T7-U8V9","HPHUC-M-W1X2-Y3Z4-A5B6","HPHUC-M-C7D8-E9F1-G2H3","HPHUC-M-I4J5-K6L7-M8N9","HPHUC-M-O1P2-Q3R4-S5T6",
+    "HPHUC-M-U7V8-W9X1-Y2Z3","HPHUC-M-A4B5-C6D7-E8F9","HPHUC-M-G1H2-I3J4-K5L6","HPHUC-M-M7N8-O9P1-Q2R3","HPHUC-M-S4T5-U6V7-W8X9",
+    "HPHUC-M-Y1Z2-A3B4-C5D6","HPHUC-M-E7F8-G9H1-I2J3","HPHUC-M-K4L5-M6N7-O8P9","HPHUC-M-Q1R2-S3T4-U5V6","HPHUC-M-W7X8-Y9Z1-A2B3",
+    "HPHUC-M-C4D5-E6F7-G8H9","HPHUC-M-I1J2-K3L4-M5N6","HPHUC-M-O7P8-Q9R1-S2T3","HPHUC-M-U4V5-W6X7-Y8Z9","HPHUC-M-A1C2-E3G4-I5K6",
+    "HPHUC-M-M7O8-Q9S1-U2W3","HPHUC-M-Y4A5-C6E7-G8I9","HPHUC-M-K1M2-O3Q4-S5U6","HPHUC-M-W7Y8-A9C1-E2G3","HPHUC-M-I4K5-M6O7-Q8S9",
+    "HPHUC-M-U1W2-Y3A4-C5E6","HPHUC-M-G7I8-K9M1-O2Q3","HPHUC-M-S4U5-W6Y7-A8C9","HPHUC-M-E1G2-I3K4-M5O6","HPHUC-M-Q7S8-U9W1-Y2A3",
+    "HPHUC-M-C4E5-G6I7-K8M9","HPHUC-M-O1Q2-S3U4-W5Y6","HPHUC-M-A7C8-E9G1-I2K3","HPHUC-M-M4O5-Q6S7-U8W9","HPHUC-M-Y1A2-C3E4-G5I6",
+    "HPHUC-M-K7M8-O9Q1-S2U3","HPHUC-M-W4Y5-A6C7-E8G9","HPHUC-M-I1K2-M3O4-Q5S6","HPHUC-M-U7W8-Y9A1-C2E3","HPHUC-M-G4I5-K6M7-O8Q9",
+    "HPHUC-M-S1U2-W3Y4-A5C6","HPHUC-M-E7G8-I9K1-M2O3","HPHUC-M-Q4S5-U6W7-Y8A9","HPHUC-M-C1E2-G3I4-K5M6","HPHUC-M-O7Q8-S9U1-W2Y3",
+    "HPHUC-M-A4C5-E6G7-I8K9","HPHUC-M-M1O2-Q3S4-U5W6","HPHUC-M-Y7A8-C9E1-G2I3","HPHUC-M-K4M5-O6Q7-S8U9","HPHUC-M-W1Y2-A3C4-E5G6",
+    "HPHUC-M-I7K8-M9O1-Q2S3","HPHUC-M-U4W5-Y6A7-C8E9","HPHUC-M-G1I2-K3M4-O5Q6","HPHUC-M-S7U8-W9Y1-A2C3","HPHUC-M-E4G5-I6K7-M8O9",
+    "HPHUC-M-Q1S2-U3W4-Y5A6","HPHUC-M-C7E8-G9I1-K2M3","HPHUC-M-O4Q5-S6U7-W8Y9","HPHUC-M-A1C2-E3G4-I5K6","HPHUC-M-M7O8-Q9S1-U2W3",
+    "HPHUC-M-Y4A5-C6E7-G8I9","HPHUC-M-K1M2-O3Q4-S5U6","HPHUC-M-W7Y8-A9C1-E2G3","HPHUC-M-I4K5-M6O7-Q8S9","HPHUC-M-U1W2-Y3A4-C5E6",
+    "HPHUC-M-G7I8-K9M1-O2Q3","HPHUC-M-S4U5-W6Y7-A8C9","HPHUC-M-E1G2-I3K4-M5O6","HPHUC-M-Q7S8-U9W1-Y2A3","HPHUC-M-C4E5-G6I7-K8M9",
+    "HPHUC-M-O1Q2-S3U4-W5Y6","HPHUC-M-A7C8-E9G1-I2K3","HPHUC-M-M4O5-Q6S7-U8W9","HPHUC-M-Y1A2-C3E4-G5I6","HPHUC-M-K7M8-O9Q1-S2U3"
+  ];
+  
+  // ===== DEVICE ID =====
+  function getDeviceId() {
+    let deviceId = localStorage.getItem('hphuc_device_id');
+    if (!deviceId) {
+      const info = navigator.userAgent + screen.width + screen.height + navigator.language;
+      let hash = 0;
+      for (let i = 0; i < info.length; i++) {
+        hash = ((hash << 5) - hash) + info.charCodeAt(i);
+        hash |= 0;
+      }
+      deviceId = 'DEV-' + Math.abs(hash).toString(36).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+      localStorage.setItem('hphuc_device_id', deviceId);
+    }
+    return deviceId;
+  }
+  
+  function getUsedKeys() {
+    try { return JSON.parse(localStorage.getItem('hphuc_used_keys') || '{}'); } catch(e) { return {}; }
+  }
+  function saveUsedKeys(keys) {
+    localStorage.setItem('hphuc_used_keys', JSON.stringify(keys));
+  }
+  
+  // ===== KÍCH HOẠT KEY =====
   let isPrime = false;
   
+  function activateKey() {
+    const input = document.getElementById('keyInput');
+    const key = input.value.trim().toUpperCase();
+    
+    if (!key) { showToast('⚠️ Vui lòng nhập KEY!'); return; }
+    
+    let keyType = null;
+    if (KEYS_WEEK.includes(key)) keyType = 'week';
+    else if (KEYS_MONTH.includes(key)) keyType = 'month';
+    
+    if (!keyType) {
+      showToast('❌ KEY không hợp lệ!');
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+      return;
+    }
+    
+    const myDevice = getDeviceId();
+    const usedKeys = getUsedKeys();
+    
+    if (usedKeys[key]) {
+      if (usedKeys[key].device === myDevice) {
+        showToast('✅ KEY đã kích hoạt trên máy này!');
+        activatePrime(keyType, usedKeys[key].expiresAt);
+        return;
+      } else {
+        showToast('🚫 KEY đã được dùng trên máy khác!');
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        return;
+      }
+    }
+    
+    const now = Date.now();
+    const duration = keyType === 'week' ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000;
+    
+    usedKeys[key] = {
+      device: myDevice,
+      activatedAt: now,
+      expiresAt: now + duration,
+      type: keyType
+    };
+    saveUsedKeys(usedKeys);
+    
+    localStorage.setItem('hphuc_is_prime', 'true');
+    localStorage.setItem('hphuc_prime_key', key);
+    localStorage.setItem('hphuc_prime_expires', (now + duration).toString());
+    localStorage.setItem('hphuc_prime_type', keyType);
+    
+    showToast('👑 KÍCH HOẠT ' + (keyType === 'week' ? 'VIP TUẦN' : 'VIP THÁNG') + ' THÀNH CÔNG!');
+    if (navigator.vibrate) navigator.vibrate([50, 100, 50, 100, 50]);
+    
+    activatePrime(keyType, now + duration);
+    input.value = '';
+  }
+  
+  function activatePrime(type, expires) {
+    isPrime = true;
+    const statusEl = document.getElementById('primeStatus');
+    const daysLeft = Math.ceil((expires - Date.now()) / (24 * 60 * 60 * 1000));
+    statusEl.textContent = 'VIP ' + (type === 'week' ? 'TUẦN' : 'THÁNG') + ' • Còn ' + daysLeft + ' ngày ✓';
+    statusEl.classList.add('active');
+    document.querySelectorAll('.prime-feature').forEach(f => f.classList.remove('locked'));
+  }
+  
+  function checkPrimeOnLoad() {
+    const savedPrime = localStorage.getItem('hphuc_is_prime');
+    const savedKey = localStorage.getItem('hphuc_prime_key');
+    const expires = parseInt(localStorage.getItem('hphuc_prime_expires') || '0');
+    const primeType = localStorage.getItem('hphuc_prime_type') || '';
+    
+    if (savedPrime === 'true' && savedKey) {
+      const myDevice = getDeviceId();
+      const usedKeys = getUsedKeys();
+      
+      if (!usedKeys[savedKey] || usedKeys[savedKey].device !== myDevice) {
+        localStorage.removeItem('hphuc_is_prime');
+        localStorage.removeItem('hphuc_prime_key');
+        localStorage.removeItem('hphuc_prime_expires');
+        return;
+      }
+      
+      if (Date.now() > expires) {
+        setTimeout(() => showToast('⏰ KEY đã hết hạn! Liên hệ gia hạn.'), 1000);
+        localStorage.removeItem('hphuc_is_prime');
+        localStorage.removeItem('hphuc_prime_key');
+        localStorage.removeItem('hphuc_prime_expires');
+        return;
+      }
+      
+      activatePrime(primeType, expires);
+    }
+  }
+  
+  // ===== CHECK PRIME KHI NHẤN SWITCH VIP =====
   function checkPrime(el) {
     if (!isPrime) {
       showToast('🔒 Cần mua PRIME VIP để sử dụng!');
@@ -823,24 +1077,17 @@
     showToast((on ? '✅ Bật: ' : '⭕ Tắt: ') + name);
   }
   
-  function buyPrime() {
+  // ===== MUA PRIME =====
+  function buyPrime(type) {
     if (isPrime) {
       showToast('👑 Bạn đã là PRIME VIP!');
       return;
     }
-    if (confirm('💎 MUA PRIME VIP\n\nLiên hệ Zalo: 0916678949\n\nGiá: 50.000đ / tháng\n\nNhấn OK để mở Zalo')) {
+    const price = type === 'week' ? '20.000đ / 7 ngày' : '50.000đ / 30 ngày';
+    const title = type === 'week' ? 'GÓI TUẦN' : 'GÓI THÁNG';
+    if (confirm('💎 MUA ' + title + '\n\n💰 Giá: ' + price + '\n\n📞 Liên hệ Zalo: 0916678949\n\nSau khi thanh toán, admin sẽ gửi KEY kích hoạt.\n\nNhấn OK để mở Zalo')) {
       window.open('https://zalo.me/0916678949', '_blank');
     }
-  }
-  
-  function activatePrime() {
-    isPrime = true;
-    document.getElementById('primeStatus').textContent = 'ĐÃ KÍCH HOẠT ✓';
-    document.getElementById('primeStatus').classList.add('active');
-    document.querySelectorAll('.prime-feature').forEach(f => {
-      f.classList.remove('locked');
-    });
-    showToast('👑 PRIME VIP đã được kích hoạt!');
   }
   
   // ===== SIMULATE FPS =====
@@ -856,8 +1103,7 @@
   // ===== KHỞI TẠO =====
   window.addEventListener('load', () => {
     setTimeout(() => showToast('⚡ Hphucdpi đã sẵn sàng!'), 500);
-    const fpsInner = document.getElementById('fpsInner');
-    if (fpsInner) fpsInner.classList.add('show');
+    checkPrimeOnLoad();
   });
 </script>
 </body>
