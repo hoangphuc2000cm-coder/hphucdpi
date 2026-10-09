@@ -548,7 +548,6 @@
       <div class="switch"></div>
     </div>
 
-    <!-- TĂNG FPS với chọn FPS bên trong -->
     <div class="feature-card active fps-expand" id="fpsCard">
       <div class="fps-card-header" onclick="toggleFPSExpand(this)">
         <div class="feature-icon">📺</div>
@@ -595,7 +594,6 @@
       <div class="switch on"></div>
     </div>
 
-    <!-- THÔNG TIN THIẾT BỊ -->
     <div class="section-title">Thông tin thiết bị</div>
     <div class="info-card">
       <div class="info-title">Thông tin thiết bị</div>
@@ -617,7 +615,6 @@
       </div>
     </div>
 
-    <!-- ƯU ĐIỂM -->
     <div class="section-title">Ưu điểm nổi bật</div>
     <div class="benefits">
       <div class="benefits-title">Ưu điểm nổi bật</div>
@@ -764,20 +761,15 @@
     const sw = card.querySelector('.switch');
     const inner = card.querySelector('.fps-inner');
     
-    // Nếu switch đang OFF → bật lên
     if (!sw.classList.contains('on')) {
       sw.classList.add('on');
       card.classList.add('active');
       showToast('✅ Bật: Tăng FPS');
-    } else {
-      // Nếu đang ON mà nhấn vào → tắt
-      sw.classList.remove('on');
-      card.classList.remove('active');
-      showToast('⭕ Tắt: Tăng FPS');
+      inner.classList.add('show');
+      fpsExpanded = true;
       return;
     }
     
-    // Toggle mở rộng
     fpsExpanded = !fpsExpanded;
     if (fpsExpanded) {
       inner.classList.add('show');
@@ -790,11 +782,9 @@
   
   // ===== CHỌN FPS TRONG THẺ =====
   function selectFPSInline(el, fps) {
-    // Bỏ chọn tất cả trong cùng nhóm
     el.parentElement.querySelectorAll('.fps-opt-inline').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
     
-    // Cập nhật FPS hiển thị
     const currentFPS = document.getElementById('currentFPS');
     if (currentFPS) currentFPS.textContent = fps;
     
@@ -854,20 +844,18 @@
   }
   
   // ===== SIMULATE FPS =====
- cho  setInterval(() => {
+  setInterval(() => {
     const currentFPS = parseInt(document.getElementById('currentFPS').textContent) || 60;
     const variation = Math.floor(Math.random() * 5) - 2;
     const display = document.querySelector('.fps-display-value');
     if (display) {
-      display.textContent GitHub = Math.max(30, currentFPS + variation);
+      display.textContent = Math.max(30, currentFPS + variation);
     }
   }, 2000);
   
   // ===== KHỞI TẠO =====
   window.addEventListener('load', () => {
-    build
-2. setTimeout(() => showToast('⚡ Hphucdpi đã sẵn sàng!'), 500);
-    // Mở sẵn phần FPS
+    setTimeout(() => showToast('⚡ Hphucdpi đã sẵn sàng!'), 500);
     const fpsInner = document.getElementById('fpsInner');
     if (fpsInner) fpsInner.classList.add('show');
   });
