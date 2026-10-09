@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hphucdpi - Gaming Assistant</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    background: #0a0e1a;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    user-select: none;
+  }
+  
+  /* ===== NỀN SAO ===== */
+  .stars {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at top, #1a1f3a 0%, #0a0e1a 70%);
+    z-index: -2;
+  }
+  .stars::before, .stars::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 70%, #9bb, transparent),
+      radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 40% 80%, #79f, transparent),
+      radial-gradient(2px 2px at 90% 50%, #aaf, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 6s infinite alternate;
+  }
+  .stars::after { animation-delay: 3s; opacity: 0.5; }
+  @keyframes twinkle {
+    from { opacity: 0.3; transform: scale(1); }
+    to { opacity: 0.9; transform: scale(1.02); }
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(30,40,70,0.9), transparent);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(100,150,255,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .logo {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4fc3f7, #b388ff, #ff4081);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  
+  .logo::before { content: '⚡ '; -webkit-text-fill-color: #4fc3f7; }
+  
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    padding: 6px 12px;
+    background: rgba(0,255,150,0.1);
+    border: 1px solid rgba(0,255,150,0.3);
+    border-radius: 20px;
+    color: #00ff96;
+    font-weight: 600;
+  }
+  
+  .status-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #00ff96;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ff96;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ===== PANEL CHÍNH ===== */
+  .panel {
+    padding: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+  }
+  
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #6688bb;
+    margin: 20px 0 12px;
+    font-weight: 700;
+  }
+  
+  /* ===== CARD FPS ===== */
+  .fps-card {
+    background: linear-gradient(135deg, rgba(79,195,247,0.1), rgba(179,136,255,0.1));
+    border: 1px solid rgba(100,150,255,0.2);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  
+  .fps-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shine 3s infinite;
+  }
+  
+  @keyframes shine {
+    to { left: 100%; }
+  }
+  
+  .fps-value {
+    font-size: 56px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00ff96, #4fc3f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .fps-label {
+    font-size: 12px;
+    color: #8899bb;
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  
+  .fps-sub {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(100,150,255,0.15);
+  }
+  
+  .fps-sub-item {
+    font-size: 11px;
+    color: #8899bb;
+    text-align: center;
+  }
+  
+  .fps-sub-item strong {
+    display: block;
+    font-size: 16px;
+    color: #4fc3f7;
+    margin-bottom: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== GRID TÍNH NĂNG ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .feature {
+    background: rgba(30,40,70,0.6);
+    border: 1px solid rgba(100,150,255,0.15);
+    border-radius: 16px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .feature:active { transform: scale(0.95); }
+  
+  .feature.active {
+    background: linear-gradient(135deg, rgba(79,195,247,0.25), rgba(179,136,255,0.25));
+    border-color: #4fc3f7;
+    box-shadow: 0 0 20px rgba(79,195,247,0.3);
+  }
+  
+  .feature.active::after {
+    content: '';
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 6px; height: 6px;
+    background: #00ff96;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00ff96;
+  }
+  
+  .feature-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  
+  .feature-name {
+    font-size: 11px;
+    color: #ccd6f6;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  
+  .feature-desc {
+    font-size: 9px;
+    color: #6688bb;
+    margin-top: 2px;
+  }
+
+  /* ===== CROSSHAIR OVERLAY ===== */
+  .crosshair {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+  }
+  
+  .crosshair.active { display: block; }
+  
+  .crosshair-dot {
+    width: 20px; height: 20px;
+    border: 2px solid #00ff96;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff96, inset 0 0 6px #00ff96;
+    position: relative;
+  }
+  
+  .crosshair-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px; height: 2px;
+    background: #00ff96;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00ff96;
+  }
+
+  /* ===== THANH TRƯỢT ===== */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(30,40,70,0.6);
+    border: 1px solid rgba(100,150,255,0.15);
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .slider-row label {
+    font-size: 12px;
+    color: #ccd6f6;
+    min-width: 70px;
+    font-weight: 600;
+  }
+  
+  .slider-row input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    background: rgba(100,150,255,0.2);
+    border-radius: 2px;
+    outline: none;
+  }
+  
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: linear-gradient(135deg, #4fc3f7, #b388ff);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(79,195,247,0.6);
+  }
+  
+  .slider-row .value {
+    font-size: 12px;
+    color: #4fc3f7;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== TOGGLE ===== */
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    background: rgba(30,40,70,0.6);
+    border: 1px solid rgba(100,150,255,0.15);
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .toggle-row span {
+    font-size: 13px;
+    color: #ccd6f6;
+    font-weight: 600;
+  }
+  
+  .toggle-row .sub {
+    font-size: 10px;
+    color: #6688bb;
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  
+  .switch {
+    width: 46px; height: 26px;
+    background: rgba(100,150,255,0.2);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    background: #8899bb;
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+  
+  .switch.on {
+    background: linear-gradient(135deg, #4fc3f7, #b388ff);
+  }
+  
+  .switch.on::after {
+    left: 23px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  }
+
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 8px 20px;
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(100,150,255,0.15);
+    z-index: 100;
+  }
+  
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    cursor: pointer;
+    color: #6688bb;
+    transition: color 0.2s;
+  }
+  
+  .nav-item.active { color: #4fc3f7; }
+  
+  .nav-item .nav-icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  .nav-item .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+  }
+  
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #4fc3f7, #b388ff);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    z-index: 10000;
+    box-shadow: 0 8px 24px rgba(79,195,247,0.4);
+    white-space: nowrap;
+  }
+  
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ===== TAB CONTENT ===== */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeUp 0.3s; }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ===== GAME MODE ===== */
+  .game-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 9998;
+    display: none;
+  }
+  
+  .game-overlay.active { display: block; }
+  
+  .game-indicator {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,255,150,0.15);
+    border: 1px solid rgba(0,255,150,0.4);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #00ff96;
+    font-weight: 700;
+    z-index: 9999;
+    display: none;
+    backdrop-filter: blur(10px);
+  }
+  
+  .game-indicator.active { display: block; animation: glow 1.5s infinite alternate; }
+  
+  @keyframes glow {
+    from { box-shadow: 0 0 10px rgba(0,255,150,0.3); }
+    to { box-shadow: 0 0 25px rgba(0,255,150,0.7); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- Crosshair overlay -->
+<div class="crosshair" id="crosshair">
+  <div class="crosshair-dot"></div>
+</div>
+
+<!-- Game mode overlay -->
+<div class="game-overlay" id="gameOverlay"></div>
+<div class="game-indicator" id="gameIndicator">🎮 GAME MODE - FPS: <span id="gameFps">0</span></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">Hphucdpi</div>
+  <div class="status-badge">ONLINE</div>
+</div>
+
+<!-- Panel chính -->
+<div class="panel">
+  
+  <!-- TAB: TRANG CHỦ -->
+  <div class="tab-content active" id="tab-home">
+    <div class="section-title">Hiệu năng thiết bị</div>
+    
+    <div class="fps-card">
+      <div class="fps-value" id="fpsValue">60</div>
+      <div class="fps-label">FPS HIỆN TẠI</div>
+      <div class="fps-sub">
+        <div class="fps-sub-item">
+          <strong id="pingValue">24</strong>
+          PING (ms)
+        </div>
+        <div class="fps-sub-item">
+          <strong id="cpuValue">35%</strong>
+          CPU
+        </div>
+        <div class="fps-sub-item">
+          <strong id="ramValue">2.1GB</strong>
+          RAM
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-title">Tính năng nhanh</div>
+    <div class="grid">
+      <div class="feature" onclick="toggleFeature(this, 'Chế độ chơi game')">
+        <span class="feature-icon">🎮</span>
+        <div class="feature-name">Game Mode</div>
+        <div class="feature-desc">Tối ưu hóa</div>
+      </div>
+      <div class="feature" onclick="toggleFeature(this, 'Trợ tâm ngắm')">
+        <span class="feature-icon">🎯</span>
+        <div class="feature-name">Trợ tâm</div>
+        <div class="feature-desc">Crosshair</div>
+      </div>
+      <div class="feature" onclick="toggleFeature(this, 'Chặn thông báo')">
+        <span class="feature-icon">🔕</span>
+        <div class="feature-name">Chặn TB</div>
+        <div class="feature-desc">Không làm phiền</div>
+      </div>
+      <div class="feature" onclick="toggleFeature(this, 'Tăng tốc mạng')">
+        <span class="feature-icon">📶</span>
+        <div class="feature-name">Boost Net</div>
+        <div class="feature-desc">Giảm ping</div>
+      </div>
+      <div class="feature" onclick="toggleFeature(this, 'Ghi màn hình')">
+        <span class="feature-icon">🎥</span>
+        <div class="feature-name">Ghi hình</div>
+        <div class="feature-desc">Record</div>
+      </div>
+      <div class="feature" onclick="toggleFeature(this, 'Dọn RAM')">
+        <span class="feature-icon">🧹</span>
+        <div class="feature-name">Dọn RAM</div>
+        <div class="feature-desc">Giải phóng</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TAB: TÙY CHỈNH -->
+  <div class="tab-content" id="tab-settings">
+    <div class="section-title">Cài đặt hiển thị</div>
+    
+    <div class="slider-row">
+      <label>Độ sáng</label>
+      <input type="range" min="0" max="100" value="70" oninput="updateSlider(this, 'brightnessValue', '%')">
+      <div class="value" id="brightnessValue">70%</div>
+    </div>
+    
+    <div class="slider-row">
+      <label>Độ tương phản</label>
+      <input type="range" min="0" max="100" value="50" oninput="updateSlider(this, 'contrastValue', '%')">
+      <div class="value" id="contrastValue">50%</div>
+    </div>
+    
+    <div class="slider-row">
+      <label>Độ bão hòa</label>
+      <input type="range" min="0" max="100" value="60" oninput="updateSlider(this, 'saturationValue', '%')">
+      <div class="value" id="saturationValue">60%</div>
+    </div>
+    
+    <div class="section-title">Bật / Tắt</div>
+    
+    <div class="toggle-row">
+      <div>
+        <span>Hiển thị FPS</span>
+        <span class="sub">Hiển thị chỉ số FPS trên màn hình</span>
+      </div>
+      <div class="switch on" onclick="toggleSwitch(this)"></div>
+    </div>
+    
+    <div class="toggle-row">
+      <div>
+        <span>Tự động tối ưu</span>
+        <span class="sub">Tự động khi mở game</span>
+      </div>
+      <div class="switch on" onclick="toggleSwitch(this)"></div>
+    </div>
+    
+    <div class="toggle-row">
+      <div>
+        <span>Tiết kiệm pin</span>
+        <span class="sub">Giảm hiệu năng khi pin yếu</span>
+      </div>
+      <div class="switch" onclick="toggleSwitch(this)"></div>
+    </div>
+    
+    <div class="toggle-row">
+      <div>
+        <span>Chế độ chuyên nghiệp</span>
+        <span class="sub">Mở khóa tùy chỉnh nâng cao</span>
+      </div>
+      <div class="switch" onclick="toggleSwitch(this)"></div>
+    </div>
+  </div>
+  
+  <!-- TAB: CÔNG CỤ -->
+  <div class="tab-content" id="tab-tools">
+    <div class="section-title">Công cụ hệ thống</div>
+    
+    <div class="grid">
+      <div class="feature" onclick="showToast('📸 Đã chụp màn hình!')">
+        <span class="feature-icon">📸</span>
+        <div class="feature-name">Chụp hình</div>
+      </div>
+      <div class="feature" onclick="showToast('🧹 Đã dọn 512MB RAM!')">
+        <span class="feature-icon">🧹</span>
+        <div class="feature-name">Dọn RAM</div>
+      </div>
+      <div class="feature" onclick="showToast('🌐 Đã kiểm tra mạng: 24ms')">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-name">Test mạng</div>
+      </div>
+      <div class="feature" onclick="showToast('🔋 Pin: 87% - Sạc nhanh')">
+        <span class="feature-icon">🔋</span>
+        <div class="feature-name">Pin</div>
+      </div>
+      <div class="feature" onclick="showToast('📊 Đang phân tích...')">
+        <span class="feature-icon">📊</span>
+        <div class="feature-name">Thống kê</div>
+      </div>
+      <div class="feature" onclick="showToast('⚙️ Cài đặt nâng cao')">
+        <span class="feature-icon">⚙️</span>
+        <div class="feature-name">Nâng cao</div>
+      </div>
+    </div>
+    
+    <div class="section-title">Bộ nhớ</div>
+    <div class="fps-card">
+      <div class="fps-value" style="font-size:42px;"><span id="storageUsed">45</span>%</div>
+      <div class="fps-label">DUNG LƯỢNG ĐÃ DÙNG</div>
+      <div class="fps-sub">
+        <div class="fps-sub-item">
+          <strong>54GB</strong>
+          Đã dùng
+        </div>
+        <div class="fps-sub-item">
+          <strong>66GB</strong>
+          Còn trống
+        </div>
+        <div class="fps-sub-item">
+          <strong>120GB</strong>
+          Tổng
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TAB: TÀI KHOẢN -->
+  <div class="tab-content" id="tab-account">
+    <div class="fps-card" style="padding:30px;">
+      <div style="font-size:64px;margin-bottom:12px;">👤</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;">Người dùng Hphucdpi</div>
+      <div style="font-size:12px;color:#6688bb;margin-top:4px;">Premium · Đã xác minh ✅</div>
+    </div>
+    
+    <div class="section-title">Tài khoản</div>
+    <div class="toggle-row" onclick="showToast('👤 Chỉnh sửa hồ sơ')">
+      <span>Chỉnh sửa hồ sơ</span>
+      <span style="color:#6688bb;">›</span>
+    </div>
+    <div class="toggle-row" onclick="showToast('💎 Nâng cấp Premium')">
+      <span>Nâng cấp Premium</span>
+      <span style="color:#6688bb;">›</span>
+    </div>
+    <div class="toggle-row" onclick="showToast('🎁 Mã quà tặng')">
+      <span>Mã quà tặng</span>
+      <span style="color:#6688bb;">›</span>
+    </div>
+    <div class="section-title">Khác</div>
+    <div class="toggle-row" onclick="showToast('❓ Trợ giúp')">
+      <span>Trợ giúp</span>
+      <span style="color:#6688bb;">›</span>
+    </div>
+    <div class="toggle-row" onclick="showToast('ℹ️ Phiên bản 1.0.0')">
+      <span>Về Hphucdpi</span>
+      <span style="color:#6688bb;">v1.0.0</span>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchTab('home', this)">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Trang chủ</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('settings', this)">
+    <span class="nav-icon">⚙️</span>
+    <span class="nav-label">Tùy chỉnh</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('tools', this)">
+    <span class="nav-icon">🛠️</span>
+    <span class="nav-label">Công cụ</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('account', this)">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Tài khoản</span>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== CHUYỂN TAB =====
+  function switchTab(tab, el) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    el.classList.add('active');
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+  
+  // ===== TOAST =====
+  let toastTimer;
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    if (navigator.vibrate) navigator.vibrate(15);
+  }
+  
+  // ===== TOGGLE FEATURE =====
+  function toggleFeature(el, name) {
+    el.classList.toggle('active');
+    const on = el.classList.contains('active');
+    showToast((on ? '✅ Bật: ' : '⭕ Tắt: ') + name);
+    
+    // Crosshair
+    if (name === 'Trợ tâm ngắm') {
+      document.getElementById('crosshair').classList.toggle('active', on);
+    }
+    
+    // Game mode
+    if (name === 'Chế độ chơi game') {
+      document.getElementById('gameOverlay').classList.toggle('active', on);
+      document.getElementById('gameIndicator').classList.toggle('active', on);
+    }
+  }
+  
+  // ===== TOGGLE SWITCH =====
+  function toggleSwitch(el) {
+    el.classList.toggle('on');
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+  
+  // ===== SLIDER =====
+  function updateSlider(el, id, suffix) {
+    document.getElementById(id).textContent = el.value + suffix;
+  }
+  
+  // ===== SIMULATE FPS/PING/CPU =====
+  let gameMode = false;
+  setInterval(() => {
+    const fps = 55 + Math.floor(Math.random() * 10);
+    const ping = 18 + Math.floor(Math.random() * 15);
+    const cpu = 25 + Math.floor(Math.random() * 20);
+    const ram = (1.8 + Math.random() * 1.5).toFixed(1);
+    
+    document.getElementById('fpsValue').textContent = fps;
+    document.getElementById('pingValue').textContent = ping;
+    document.getElementById('cpuValue').textContent = cpu + '%';
+    document.getElementById('ramValue').textContent = ram + 'GB';
+    document.getElementById('gameFps').textContent = fps;
+  }, 1500);
+  
+  // ===== KHỞI TẠO =====
+  window.addEventListener('load', () => {
+    setTimeout(() => showToast('⚡ Hphucdpi đã sẵn sàng!'), 500);
+  });
+  
+  // Chống zoom double tap
+  let lastTouch = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouch <= 300) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
+</script>
+</body>
+</html>
